@@ -62,7 +62,7 @@ Form = {
             $(".newuniq").each(function (index) {
                 var val = $(this).val();
                 if (val === '') {
-                    alert('value is empty');
+                    alert('code cant be empty');
                     unique = false;
                     $(this).focus()
                     return unique;
@@ -81,12 +81,12 @@ Form = {
                 $(".zipcode").each(function (index) {
                     var val = $(this).val();
                     if (val === '') {
-                        alert('value is empty');
+                        alert('please complete the zipcode');
                         zipcode = false;
                         $(this).focus()
                         return zipcode;
                     } else if (val.match(/^[0-9]+/) === false) {
-                        alert('code must be numeric');
+                        alert('zipcode has to be a number');
                         zipcode = false;
                         $(this).focus()
                         return zipcode;
