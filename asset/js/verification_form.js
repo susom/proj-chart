@@ -4,6 +4,54 @@ Form = {
         $("#form").hide();
         Form.inject();
 
+        var body = $('body');
+
+        function goToNextInput(e) {
+            var key = e.which,
+                t = $(e.target),
+                sib = t.next().find('.class');
+            if (key != 9 && (key < 48 || key > 57)) {
+                e.preventDefault();
+                return false;
+            }
+
+            if (key === 9) {
+                return true;
+            }
+
+            if (!sib || !sib.length) {
+                sib = body.find('input').eq(0);
+            }
+            sib.select().focus();
+        }
+
+        function onKeyDown(e) {
+            var key = e.which;
+
+            if (key === 9 || (key >= 48 && key <= 57)) {
+                return true;
+            }
+
+            e.preventDefault();
+            return false;
+        }
+
+        function onFocus(e) {
+            $(e.target).select();
+        }
+
+        $(document).on('keyup', 'input', function (e) {
+            goToNextInput(e)
+        });
+
+        $(document).on('keydown', 'input', function (e) {
+            goToNextInput(e)
+        });
+
+        $(document).on('click', 'input', function (e) {
+            goToNextInput(e)
+        });
+
         $(document).on('click', '#verify', function () {
             var unique = ''
             var zipcode = ''
@@ -68,22 +116,22 @@ Form = {
         var contest = '<div id="new-form" class="container">' +
             '<div class="row col-12">' +
             '<div class="col-2">Postal Unique Code:</div>' +
-            '<div class="col-1"><input class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" " /></div>' +
-            '<div class="col-1"><input class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
-            '<div class="col-1"><input class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
-            '<div class="col-1"><input class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
-            '<div class="col-1"><input class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
-            '<div class="col-1"><input class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
-            '<div class="col-1"><input class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
-            '<div class="col-1"><input class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
+            '<div class="col-1"><input data-num="1" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" " /></div>' +
+            '<div class="col-1"><input data-num="2" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
+            '<div class="col-1"><input data-num="3" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
+            '<div class="col-1"><input data-num="4" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
+            '<div class="col-1"><input data-num="5" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
+            '<div class="col-1"><input data-num="6" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
+            '<div class="col-1"><input data-num="7" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
+            '<div class="col-1"><input data-num="8" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
             '</div>' +
             '<div class="row col-12">' +
             '<div class="col-2">Postal Unique Code:</div>' +
-            '<div class="col-2"><input class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}"/></div>' +
-            '<div class="col-2"><input class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
-            '<div class="col-2"><input class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
-            '<div class="col-2"><input class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
-            '<div class="col-2"><input class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
+            '<div class="col-2"><input data-num="1" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}"/></div>' +
+            '<div class="col-2"><input data-num="2" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
+            '<div class="col-2"><input data-num="3" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
+            '<div class="col-2"><input data-num="4" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
+            '<div class="col-2"><input data-num="5" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
             '</div>' +
             '<div class="row offset-4"><button id="verify" type="button" class="btn btn-info">Verify</button></div>' +
             '</div>';
