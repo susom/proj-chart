@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="TRACK COVID MSG DATABASE" AsOfDateTime="2020-07-14T11:01:14" CreationDateTime="2020-07-14T11:01:14" SourceSystem="REDCap" SourceSystemVersion="9.9.9">
+<Study OID="Project.TRACKCOVIDMSGDATABASE">
+<GlobalVariables>
+	<StudyName>TRACK COVID MSG DATABASE</StudyName>
+	<StudyDescription>This file contains the metadata, events, and data for REDCap project "TRACK COVID MSG DATABASE".</StudyDescription>
+	<ProtocolName>TRACK COVID MSG DATABASE</ProtocolName>
+	<redcap:RecordAutonumberingEnabled>1</redcap:RecordAutonumberingEnabled>
+	<redcap:CustomRecordLabel></redcap:CustomRecordLabel>
+	<redcap:SecondaryUniqueField>newuniq</redcap:SecondaryUniqueField>
+	<redcap:SchedulingEnabled>1</redcap:SchedulingEnabled>
+	<redcap:SurveysEnabled>1</redcap:SurveysEnabled>
+	<redcap:SurveyInvitationEmailField>email</redcap:SurveyInvitationEmailField>
+	<redcap:Purpose>0</redcap:Purpose>
+	<redcap:PurposeOther></redcap:PurposeOther>
+	<redcap:ProjectNotes></redcap:ProjectNotes>
+	<redcap:MissingDataCodes></redcap:MissingDataCodes>
+	<redcap:UserRolesGroup>
+		<redcap:UserRoles role_name="Data Entry" lock_record="0" lock_record_multiform="0" lock_record_customize="0" data_export_tool="0" data_import_tool="1" data_comparison_tool="0" data_logging="0" file_repository="1" double_data="0" user_rights="0" data_access_groups="0" graphical="1" reports="1" design="0" calendar="1" data_entry="[my_first_instrument,1]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="0" record_delete="0" dts="0" participants="1" data_quality_design="0" data_quality_execute="0" data_quality_resolution="1" random_setup="0" random_dashboard="0" random_perform="0" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="0"/>
+		<redcap:UserRoles role_name="Export w/o Identifiers" lock_record="0" lock_record_multiform="0" lock_record_customize="0" data_export_tool="3" data_import_tool="0" data_comparison_tool="0" data_logging="0" file_repository="1" double_data="0" user_rights="0" data_access_groups="0" graphical="1" reports="1" design="0" calendar="0" data_entry="[my_first_instrument,1]" api_export="1" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="0" record_rename="0" record_delete="0" dts="0" participants="1" data_quality_design="0" data_quality_execute="0" data_quality_resolution="1" random_setup="0" random_dashboard="0" random_perform="0" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="0"/>
+		<redcap:UserRoles role_name="Project Admins" lock_record="2" lock_record_multiform="1" lock_record_customize="1" data_export_tool="1" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" calendar="1" data_entry="[my_first_instrument,1][trackcovid_screening_survey,1][trackcovid_informed_consent,1][trackcovid_baseline_survey,1][trackcovid_monthly_followup_survey,1][trackcovid_sample_tracker,1][trackcovid_visit_summary,1][import_tested_patient_demographics,1][recruitment_process_tracking,1][trackcovid_screening_survey_e0dd5a,1][trackcovid_participant_demographics,1][trackcovid_recruitment_process_tracking,1][survey,1][address_based_sample_do_not_edit,1][link_population,1][trackcovid_baseline_survey_581f2a,1][trackcovid_baseline_survey_legacy,1]" api_export="1" api_import="1" mobile_app="1" mobile_app_download_data="1" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="0" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="0"/>
+		<redcap:UserRoles role_name="Read Only" lock_record="0" lock_record_multiform="0" lock_record_customize="0" data_export_tool="0" data_import_tool="0" data_comparison_tool="0" data_logging="0" file_repository="1" double_data="0" user_rights="0" data_access_groups="0" graphical="1" reports="1" design="0" calendar="0" data_entry="[my_first_instrument,1]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="0" record_rename="0" record_delete="0" dts="0" participants="1" data_quality_design="0" data_quality_execute="0" data_quality_resolution="1" random_setup="0" random_dashboard="0" random_perform="0" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="0"/>
+	</redcap:UserRolesGroup>
+	<redcap:ReportsGroup>
+		<redcap:Reports title="Link report" report_order="1" user_access="ALL" user_edit_access="ALL" description="" combine_checkbox_values="0" output_dags="0" output_survey_fields="0" output_missing_data_codes="0" remove_line_breaks_in_values="1" orderby_field1="record_id" orderby_sort1="ASC" orderby_field2="" orderby_sort2="" orderby_field3="" orderby_sort3="" advanced_logic="" filter_type="RECORD" dynamic_filter1="" dynamic_filter2="" dynamic_filter3="" fields="" limiter_fields="" limiter_dags="" limiter_events="" limiter_logic="" user_access_users="" user_access_roles="" user_access_dags="" user_edit_access_users="" user_edit_access_roles="" user_edit_access_dags="" redcap_reports_fields="newuniq" redcap_reports_filter_dags="" redcap_reports_filter_events="" ID="ca3512f4dfa95a03169c5a670a4c91a19b3077b4"/>
+	</redcap:ReportsGroup>
+</GlobalVariables>
+<MetaDataVersion OID="Metadata.TRACKCOVIDMSGDATABASE_2020-07-14_1101" Name="TRACK COVID MSG DATABASE" redcap:RecordIdField="record_id">
+	<FormDef OID="Form.address_based_sample_do_not_edit" Name="Address Based Sample (DO NOT EDIT)" Repeating="No" redcap:FormName="address_based_sample_do_not_edit">
+		<ItemGroupRef ItemGroupOID="address_based_sample_do_not_edit.record_id" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" Mandatory="No"/>
+	</FormDef>
+	<ItemGroupDef OID="address_based_sample_do_not_edit.record_id" Name="Address Based Sample (DO NOT EDIT)" Repeating="No">
+		<ItemRef ItemOID="record_id" Mandatory="No" redcap:Variable="record_id"/>
+		<ItemRef ItemOID="about" Mandatory="No" redcap:Variable="about"/>
+		<ItemRef ItemOID="newuniq" Mandatory="No" redcap:Variable="newuniq"/>
+		<ItemRef ItemOID="randid" Mandatory="No" redcap:Variable="randid"/>
+		<ItemRef ItemOID="addr" Mandatory="No" redcap:Variable="addr"/>
+		<ItemRef ItemOID="csz" Mandatory="No" redcap:Variable="csz"/>
+		<ItemRef ItemOID="zipcode_abs" Mandatory="No" redcap:Variable="zipcode_abs"/>
+		<ItemRef ItemOID="cntyid" Mandatory="No" redcap:Variable="cntyid"/>
+		<ItemRef ItemOID="risk" Mandatory="No" redcap:Variable="risk"/>
+		<ItemRef ItemOID="stratum" Mandatory="No" redcap:Variable="stratum"/>
+		<ItemRef ItemOID="replicat" Mandatory="No" redcap:Variable="replicat"/>
+		<ItemRef ItemOID="email_fake" Mandatory="No" redcap:Variable="email_fake"/>
+		<ItemRef ItemOID="consent_rc_link" Mandatory="No" redcap:Variable="consent_rc_link"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="address_based_sample_do_not_edit_complete" Mandatory="No" redcap:Variable="address_based_sample_do_not_edit_complete"/>
+	</ItemGroupDef>
+	<ItemDef OID="record_id" Name="record_id" DataType="text" Length="999" redcap:Variable="record_id" redcap:FieldType="text" redcap:Identifier="y">
+		<Question><TranslatedText>Record ID</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="about" Name="about" DataType="text" Length="999" redcap:Variable="about" redcap:FieldType="descriptive">
+		<Question><TranslatedText>The project contains the extract from MSG.
+
+THG contains a copy of this extract for telephone-based recruitment.
+</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="newuniq" Name="newuniq" DataType="text" Length="999" redcap:Variable="newuniq" redcap:FieldType="text">
+		<Question><TranslatedText>newuniq</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="randid" Name="randid" DataType="text" Length="999" redcap:Variable="randid" redcap:FieldType="text">
+		<Question><TranslatedText>ranid</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="addr" Name="addr" DataType="text" Length="999" redcap:Variable="addr" redcap:FieldType="text">
+		<Question><TranslatedText>addr</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="csz" Name="csz" DataType="text" Length="999" redcap:Variable="csz" redcap:FieldType="text">
+		<Question><TranslatedText>csz</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="zipcode_abs" Name="zipcode_abs" DataType="text" Length="999" redcap:Variable="zipcode_abs" redcap:FieldType="text">
+		<Question><TranslatedText>ZIPCode</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="cntyid" Name="cntyid" DataType="text" Length="999" redcap:Variable="cntyid" redcap:FieldType="text">
+		<Question><TranslatedText>CntyID</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="risk" Name="risk" DataType="text" Length="999" redcap:Variable="risk" redcap:FieldType="text">
+		<Question><TranslatedText>Risk</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="stratum" Name="stratum" DataType="text" Length="999" redcap:Variable="stratum" redcap:FieldType="text">
+		<Question><TranslatedText>stratum</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="replicat" Name="replicat" DataType="text" Length="999" redcap:Variable="replicat" redcap:FieldType="text">
+		<Question><TranslatedText>replicat</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="email_fake" Name="email_fake" DataType="text" Length="999" redcap:Variable="email_fake" redcap:FieldType="text" redcap:TextValidationType="email">
+		<Question><TranslatedText>FAKE EMAIL</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="consent_rc_link" Name="consent_rc_link" DataType="text" Length="999" redcap:Variable="consent_rc_link" redcap:FieldType="text" redcap:FieldAnnotation="@DEFAULT=[baseline_visit_arm_1][survey-url:trackcovid_informed_consent]">
+		<Question><TranslatedText>[baseline_visit_arm_1][survey-url:trackcovid_informed_consent]</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="address_based_sample_do_not_edit_complete" Name="address_based_sample_do_not_edit_complete" DataType="text" Length="1" redcap:Variable="address_based_sample_do_not_edit_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="address_based_sample_do_not_edit_complete.choices"/>
+	</ItemDef>
+	<CodeList OID="address_based_sample_do_not_edit_complete.choices" Name="address_based_sample_do_not_edit_complete" DataType="text" redcap:Variable="address_based_sample_do_not_edit_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+</MetaDataVersion>
+</Study>
+<ClinicalData StudyOID="Project.TRACKCOVIDMSGDATABASE" MetaDataVersionOID="Metadata.TRACKCOVIDMSGDATABASE_2020-07-14_1101">
+	<SubjectData SubjectKey="1" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.address_based_sample_do_not_edit" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="1"/>
+					<ItemData ItemOID="newuniq" Value="2SF68008"/>
+					<ItemData ItemOID="randid" Value="2468008"/>
+					<ItemData ItemOID="addr" Value="339 ULLOA ST"/>
+					<ItemData ItemOID="csz" Value="SAN FRANCISCO, CA  94127-1228"/>
+					<ItemData ItemOID="zipcode_abs" Value="94127"/>
+					<ItemData ItemOID="cntyid" Value="4"/>
+					<ItemData ItemOID="stratum" Value="42"/>
+					<ItemData ItemOID="replicat" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="address_based_sample_do_not_edit_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="2" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.address_based_sample_do_not_edit" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="2"/>
+					<ItemData ItemOID="newuniq" Value="3SM05125"/>
+					<ItemData ItemOID="randid" Value="3505125"/>
+					<ItemData ItemOID="addr" Value="1805 E BAYSHORE RD APT 119"/>
+					<ItemData ItemOID="csz" Value="EAST PALO ALTO, CA  94303-2561"/>
+					<ItemData ItemOID="zipcode_abs" Value="94303"/>
+					<ItemData ItemOID="cntyid" Value="5"/>
+					<ItemData ItemOID="stratum" Value="53"/>
+					<ItemData ItemOID="replicat" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="address_based_sample_do_not_edit_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="3" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.address_based_sample_do_not_edit" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="3"/>
+					<ItemData ItemOID="newuniq" Value="3MA41321"/>
+					<ItemData ItemOID="randid" Value="3341321"/>
+					<ItemData ItemOID="addr" Value="768 CLAUSING AVE"/>
+					<ItemData ItemOID="csz" Value="NOVATO, CA  94945-4106"/>
+					<ItemData ItemOID="zipcode_abs" Value="94945"/>
+					<ItemData ItemOID="cntyid" Value="3"/>
+					<ItemData ItemOID="stratum" Value="33"/>
+					<ItemData ItemOID="replicat" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="address_based_sample_do_not_edit_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="4" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.address_based_sample_do_not_edit" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="4"/>
+					<ItemData ItemOID="newuniq" Value="3SF88585"/>
+					<ItemData ItemOID="randid" Value="3488585"/>
+					<ItemData ItemOID="addr" Value="371 BRIDGEVIEW DR"/>
+					<ItemData ItemOID="csz" Value="SAN FRANCISCO, CA  94124-2234"/>
+					<ItemData ItemOID="zipcode_abs" Value="94124"/>
+					<ItemData ItemOID="cntyid" Value="4"/>
+					<ItemData ItemOID="stratum" Value="43"/>
+					<ItemData ItemOID="replicat" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="address_based_sample_do_not_edit_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="5" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.address_based_sample_do_not_edit" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="5"/>
+					<ItemData ItemOID="newuniq" Value="2SC54824"/>
+					<ItemData ItemOID="randid" Value="2654824"/>
+					<ItemData ItemOID="addr" Value="3970 THE WOODS DR APT 615"/>
+					<ItemData ItemOID="csz" Value="SAN JOSE, CA  95136-2298"/>
+					<ItemData ItemOID="zipcode_abs" Value="95136"/>
+					<ItemData ItemOID="cntyid" Value="6"/>
+					<ItemData ItemOID="stratum" Value="62"/>
+					<ItemData ItemOID="replicat" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="address_based_sample_do_not_edit_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="6" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.address_based_sample_do_not_edit" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="6"/>
+					<ItemData ItemOID="newuniq" Value="3SC11304"/>
+					<ItemData ItemOID="randid" Value="3611304"/>
+					<ItemData ItemOID="addr" Value="204 DAMSEN DR"/>
+					<ItemData ItemOID="csz" Value="SAN JOSE, CA  95116-1939"/>
+					<ItemData ItemOID="zipcode_abs" Value="95116"/>
+					<ItemData ItemOID="cntyid" Value="6"/>
+					<ItemData ItemOID="stratum" Value="63"/>
+					<ItemData ItemOID="replicat" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="address_based_sample_do_not_edit_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="7" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.address_based_sample_do_not_edit" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="7"/>
+					<ItemData ItemOID="newuniq" Value="3AL69717"/>
+					<ItemData ItemOID="randid" Value="3169717"/>
+					<ItemData ItemOID="addr" Value="931 71ST AVE APT A"/>
+					<ItemData ItemOID="csz" Value="OAKLAND, CA  94621-3311"/>
+					<ItemData ItemOID="zipcode_abs" Value="94621"/>
+					<ItemData ItemOID="cntyid" Value="1"/>
+					<ItemData ItemOID="stratum" Value="13"/>
+					<ItemData ItemOID="replicat" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="address_based_sample_do_not_edit_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="8" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.address_based_sample_do_not_edit" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="8"/>
+					<ItemData ItemOID="newuniq" Value="2AL36714"/>
+					<ItemData ItemOID="randid" Value="2136714"/>
+					<ItemData ItemOID="addr" Value="1449 5TH ST"/>
+					<ItemData ItemOID="csz" Value="BERKELEY, CA  94710-1337"/>
+					<ItemData ItemOID="zipcode_abs" Value="94710"/>
+					<ItemData ItemOID="cntyid" Value="1"/>
+					<ItemData ItemOID="stratum" Value="12"/>
+					<ItemData ItemOID="replicat" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="address_based_sample_do_not_edit_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="9" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.address_based_sample_do_not_edit" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="9"/>
+					<ItemData ItemOID="newuniq" Value="3AL03827"/>
+					<ItemData ItemOID="randid" Value="3103827"/>
+					<ItemData ItemOID="addr" Value="1446 ALCAZAR AVE"/>
+					<ItemData ItemOID="csz" Value="HAYWARD, CA  94544-6202"/>
+					<ItemData ItemOID="zipcode_abs" Value="94544"/>
+					<ItemData ItemOID="cntyid" Value="1"/>
+					<ItemData ItemOID="stratum" Value="13"/>
+					<ItemData ItemOID="replicat" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="address_based_sample_do_not_edit_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="10" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.address_based_sample_do_not_edit" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="10"/>
+					<ItemData ItemOID="newuniq" Value="3SF51326"/>
+					<ItemData ItemOID="randid" Value="3451326"/>
+					<ItemData ItemOID="addr" Value="440 EDDY ST APT 202"/>
+					<ItemData ItemOID="csz" Value="SAN FRANCISCO, CA  94109-8109"/>
+					<ItemData ItemOID="zipcode_abs" Value="94109"/>
+					<ItemData ItemOID="cntyid" Value="4"/>
+					<ItemData ItemOID="stratum" Value="43"/>
+					<ItemData ItemOID="replicat" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="address_based_sample_do_not_edit.address_based_sample_do_not_edit_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="address_based_sample_do_not_edit_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+</ClinicalData>
+</ODM>
