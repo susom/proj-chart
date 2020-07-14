@@ -1,7 +1,7 @@
 Form = {
     ajaxURL: '',
     init: function () {
-        //$("#form").hide();
+        $("#form").hide();
         Form.inject();
 
         $(document).on('click', '#verify', function () {
@@ -56,11 +56,8 @@ Form = {
             data: {newuniq: unique, zipcode_abs: zipcode, redcap_csrf_token: Form.redcap_csrf_token},
             type: 'POST',
             success: function (data) {
-                jQuery("#record-container").html(data);
-
-                jQuery("#record-table").dataTable({
-                    "paging": false,
-                });
+                $("#new-form").hide();
+                $("#form").show();
             },
             error: function (request, error) {
                 alert(request.message);
@@ -79,7 +76,6 @@ Form = {
             '<div class="col-1"><input class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
             '<div class="col-1"><input class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
             '<div class="col-1"><input class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
-            '</div>' +
             '</div>' +
             '<div class="row col-12">' +
             '<div class="col-2">Postal Unique Code:</div>' +
