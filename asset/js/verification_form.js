@@ -1,7 +1,7 @@
 Form = {
     ajaxURL: '',
     init: function () {
-        $("#form").hide();
+        //$("#form").hide();
         Form.inject();
 
         $(document).on('click', '#verify', function () {
@@ -63,7 +63,7 @@ Form = {
                 });
             },
             error: function (request, error) {
-                alert("Request: " + JSON.stringify(request));
+                alert(request.message);
             }
         });
     },

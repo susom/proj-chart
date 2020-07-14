@@ -76,11 +76,12 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
     public function formHandler() {
         // Match INCOMING newuniq Attempt and Verify zipcode_abs , find the record in the MSG DB 
         $address_data = $this->getTertProjectData("msg_db");
-        if (!$this->getTertProjectData("msg_db")){
-            $this->emDebug("Should return error but disbaling for now", "Error, no matching newuniq/zipcode_abs combination found");
-            // $this->returnError("Error, no matching MSGCODE/ZIP combination found");
+        if (!$address_data) {
+            $this->emDebug("Should return error but disbaling for now",
+                "Error, no matching newuniq/zipcode_abs combination found");
+            throw new \LogicException("MSG record not found");
         }
-        
+
         //AT THIS POINT WE HAVE THE newuniq RECORD, IT HASNT BEEN ABUSED, IT HASNT YET BEEN CLAIMED
         //0.  GET NEXT AVAIL ID IN MAIN PROJECT
         $next_id = $this->getNextAvailableRecordId($this->main_project_id);
@@ -88,23 +89,24 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
         //1.  CREATE NEW RECORD, POPULATE these 2 fields
         $data = array(
             "record_id" => $next_id,
-            "uniqid"    => $this->newuniq
+            "unique_code" => $this->newuniq
         );
-        $r    = \REDCap::saveData($this->main_project_id, 'json', json_encode(array($data)) );
+        $r = \REDCap::saveData($this->main_project_id, 'json', json_encode(array($data)));
+        if (!empty($r['errors'])) {
+            throw new \LogicException("cant save data to main project");
+        }
 
         //2.  UPDATE MSG DB record with "claimed" main record project
         $data = array(
-            "record_id"         => $this->msg_record,
-            "consent_rc_link"   => $next_id,
+            "record_id" => $address_data['record_id'],
+            "consent_rc_link" => $next_id,
         );
-        $r    = \REDCap::saveData($this->msg_project_id, 'json', json_encode(array($data)) );
+        $r = \REDCap::saveData($this->msg_db_project_id, 'json', json_encode(array($data)), 'normal');
+        if (!empty($r['errors'])) {
+            throw new \LogicException("cant save data to MSG project");
+        }
 
-        //3.  GET PUBLIC SURVEY URL WITH FIELDS LINKED
-        $survey_link = \REDCap::getSurveyLink($record=$next_id, $instrument='trackcovid_screening_survey', $event_id='', $instance=1, $project_id=$this->main_project_id);
-
-        // Return result
-        header("Content-type: application/json");
-        echo json_encode(array("survey_url" => $survey_link));
+        return true;
     }
 
     /**
@@ -126,7 +128,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
                         'return_format' => 'array',
                     );
 
-                    $results = REDCap::getData($param);;
+                    $results = \REDCap::getData($param);;
 
                     foreach ($results as $record) {
                         $result = end($record);
