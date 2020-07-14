@@ -10,6 +10,10 @@ Form = {
             var key = e.which,
                 t = $(e.target),
                 sib = t.next().find('.class');
+            var type = t.data('type')
+            var num = parseInt(t.data('num')) + 1
+            var search = "input[data-type=" + type + "][data-num=" + num + "]"
+            sib = $(search)
             if (key != 9 && (key < 48 || key > 57)) {
                 e.preventDefault();
                 return false;
@@ -43,10 +47,10 @@ Form = {
         $(document).on('keyup', 'input', function (e) {
             goToNextInput(e)
         });
-
-        $(document).on('keydown', 'input', function (e) {
-            goToNextInput(e)
-        });
+        //
+        // $(document).on('keydown', 'input', function (e) {
+        //     goToNextInput(e)
+        // });
 
         $(document).on('click', 'input', function (e) {
             goToNextInput(e)
