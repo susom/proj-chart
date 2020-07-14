@@ -19,21 +19,39 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
     public function __construct() {
 		parent::__construct();
         // Other code to run when object is instantiated
-	    if (defined(PROJECT_ID)) {
-	        // Get the mode of the module
-	        self::$MODE = $this->getProjectSetting('em-mode');
-	        $this->emDebug("In mode " . self::$MODE);
+        if (defined(PROJECT_ID)) {
+            // Get the mode of the module
+            self::$MODE = $this->getProjectSetting('em-mode');
+            $this->emDebug("In mode " . self::$MODE);
         }
-        
+
         // LOAD UP THE COORDINATED PROJECTS
         $this->enabledProjects = $this->getEnabledProjects();
-	}
-
-    function redcap_survey_page_top(){
-        return;
     }
 
-    function redcap_survey_complete(){
+    public function verify($unique, $zipcode)
+    {
+
+    }
+
+    function redcap_survey_page_top(
+        int $project_id,
+        string $record = null,
+        string $instrument,
+        int $event_id,
+        int $group_id = null,
+        string $survey_hash,
+        int $response_id = null,
+        int $repeat_instance = 1
+    ) {
+        if (PAGE == 'screening_survey') {
+            $this->includeFile('pages/verification_form.php');
+        }
+
+    }
+
+    function redcap_survey_complete()
+    {
 
         return;
     }
@@ -102,19 +120,30 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
         foreach ($this->enabledProjects as $project_mode => $project_data) {
             $pid = $project_data["pid"];
             if($project_mode == $p_type){
-                if($p_type == "msg_db"){
-                    $filter     = "[newuniq] = '" . $this->newuniq . "'"; //AND [zipcode_abs] = '". $this->zipcode_abs ."'
-                    $q          = \REDCap::getData($pid, 'json', null , null  , null, null, false, false, false, $filter);
-                    $results    = json_decode($q,true);
+                if($p_type == "msg_db") {
+                    # this will have performance  issues with 60K records
+//                    $filter     = "[newuniq] = '" . $this->newuniq . "'"; //AND [zipcode_abs] = '". $this->zipcode_abs ."'
+//                    $q          = \REDCap::getData($pid, 'json', null , null  , null, null, false, false, false, $filter);
+//                    $results    = json_decode($q,true);
 
-                    foreach ($results as $result) {
-                        $newuniq_record             = $result["record_id"];
-                        $redeemed_participant_id    = $result["consent_rc_link"];
+                    $param = array(
+                        'project_id' => $pid,
+                        'return_format' => 'array',
+                    );
+
+                    $results = REDCap::getData($param);;
+
+                    foreach ($results as $record) {
+                        $result = end($record);
+
+                        $newuniq_record = $result["record_id"];
+                        $redeemed_participant_id = $result["consent_rc_link"];
 
                         //VERIFIY THAT THE CODE USED MATCHES ZIPCODE OF ADDRESS FOR IT
-                        if($result['zipcode_abs'] == $this->zipcode_abs){
-                            if(!empty($redeemed_participant_id) ){
-                                $this->emDebug("This newuniq Code has already been claimed by participant ", $this->redeemed_participant_id);
+                        if ($result['zipcode_abs'] == $this->zipcode_abs) {
+                            if (!empty($redeemed_participant_id)) {
+                                $this->emDebug("This newuniq Code has already been claimed by participant ",
+                                    $this->redeemed_participant_id);
                                 return false;
                             }
 
@@ -212,5 +241,13 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
         </table>
         <?php
         return;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function includeFile($path)
+    {
+        include_once $path;
     }
 }
