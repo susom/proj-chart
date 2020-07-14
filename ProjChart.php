@@ -29,25 +29,20 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
         $this->enabledProjects = $this->getEnabledProjects();
     }
 
-    public function verify($unique, $zipcode)
-    {
-
-    }
 
     function redcap_survey_page_top(
-        int $project_id,
-        string $record = null,
-        string $instrument,
-        int $event_id,
-        int $group_id = null,
-        string $survey_hash,
-        int $response_id = null,
-        int $repeat_instance = 1
+        $project_id,
+        $record = null,
+        $instrument,
+        $event_id,
+        $group_id = null,
+        $survey_hash,
+        $response_id = null,
+        $repeat_instance = 1
     ) {
-        if (PAGE == 'screening_survey') {
+        if ($instrument == 'screening_survey') {
             $this->includeFile('pages/verification_form.php');
         }
-
     }
 
     function redcap_survey_complete()
