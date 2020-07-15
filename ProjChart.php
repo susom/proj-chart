@@ -63,9 +63,6 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         $response_id = null,
         $repeat_instance = 1
     ) {
-        //TODO get screening record
-        //TODO pull MSG record
-        //TODO update msg record with Mirror master child record id. main_record_id
 
         try {
             $param = array(
