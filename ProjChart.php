@@ -1,6 +1,7 @@
 <?php
 namespace Stanford\ProjChart;
 
+use Message;
 require_once "emLoggerTrait.php";
 
 class ProjChart extends \ExternalModules\AbstractExternalModule {
@@ -9,15 +10,15 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
 
     public $msgDatabasePid;
     private   $newuniq
-            , $zipcode_abs
-            , $enabledProjects
-            , $main_project_record
-            , $main_project_id
-            , $msg_db_record
-            , $msg_db_project_id;
+    , $zipcode_abs
+    , $enabledProjects
+    , $main_project_record
+    , $main_project_id
+    , $msg_db_record
+    , $msg_db_project_id;
 
     public function __construct() {
-		parent::__construct();
+        parent::__construct();
         // Other code to run when object is instantiated
         if (defined(PROJECT_ID)) {
             // Get the mode of the module
@@ -40,7 +41,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
         $response_id = null,
         $repeat_instance = 1
     ) {
-        if (strpos($instrument, "screening_survey") > -1) {
+        if (strpos($instrument, "screening_survey") > -1 && $record == null) {
             $this->includeFile('pages/verification_form.php');
         }
     }
@@ -56,7 +57,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
      */
     public function parseFormInput() {
         $this->emDebug("Incoming POST Code + Zip: ", $_POST);
-        
+
         // TODO add filter VAR
         if (empty($_POST)){
             $_POST = json_decode(file_get_contents('php://input'), true);
@@ -69,7 +70,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
     }
 
     /**
-     * Verifies the invitation newuniq and marks it as used, and creates a record in the main project 
+     * Verifies the invitation newuniq and marks it as used, and creates a record in the main project
      * @return bool survey url link
      */
     public function formHandler() {
@@ -78,7 +79,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
         if (!$address_data) {
             $this->emDebug("Should return error but disbaling for now",
                 "Error, no matching newuniq/zipcode_abs combination found");
-            throw new \LogicException("MSG record not found");
+            throw new \LogicException("MSG record not found or already used " . $this->newuniq);
         }
 
         //AT THIS POINT WE HAVE THE newuniq RECORD, IT HASNT BEEN ABUSED, IT HASNT YET BEEN CLAIMED
@@ -106,9 +107,10 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
         }
 
         //3.  GET PUBLIC SURVEY URL WITH FIELDS LINKED
-        // $survey_link = \REDCap::getSurveyLink($record=$next_id, $instrument='invitation_questionnaire', $event_id='', $instance=1, $project_id=$this->main_project);
+        $survey_link = \REDCap::getSurveyLink($next_id, 'screening_survey', $this->getFirstEventId(), $instance = 1,
+            $this->getProjectId());
 
-        return true;
+        return $survey_link;
     }
 
     /**
@@ -160,8 +162,6 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
     }
 
 
-
-
     /**
      * GET Next available RecordId in a project
      * @return bool
@@ -193,7 +193,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
             $name = $project['name'];
             $url  = APP_PATH_WEBROOT . 'ProjectSetup/index.php?pid=' . $project['project_id'];
             $mode = $this->getProjectSetting("em-mode", $pid);
-            
+
             $enabledProjects[$mode] = array(
                 'pid'   => $pid,
                 'name'  => $name,
@@ -204,7 +204,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
             switch($mode){
                 case "msg_db":
                     $this->msg_db_project_id = $pid;
-                break;
+                    break;
 
                 case "main_project":
                     $this->main_project_id = $pid;
@@ -248,5 +248,64 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
     public function includeFile($path)
     {
         include_once $path;
+    }
+
+    /**
+     * Takes a string of emails and returns a validated string of emails
+     * @param $list of emails
+     * @return array with true|false and result
+     */
+    public function parseEmailList($list)
+    {
+        // Handle comma-separated lists
+        $emails = array_filter(array_map('trim', explode(",", $list)));
+        foreach ($emails as $email) {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return array(false, "Invalid Email: $email");
+            }
+        }
+        return array(true, implode(",", $emails));
+    }
+
+    public function notifyAdmins($exception)
+    {
+        $emails = $this->getProjectSetting('admin-emails');
+        if ($emails != '') {
+            $msg = new Message();
+            global $Proj;
+            // Parse To:
+            list($success, $to) = $this->parseEmailList($emails);
+            if (!$success) {
+                return array("error" => $to);
+            }
+            if (empty($to)) {
+                return array("error" => "To address is required");
+            }
+            $msg->setTo($to);
+
+
+            // From Email:
+            list($success, $from_email) = $this->parseEmailList('redcap@stanford.edu');
+            if (!$success) {
+                return array("error" => $from_email);
+            }
+            if (empty($from_email)) {
+                return array("error" => "from_email address is required");
+            }
+            $msg->setFrom($from_email);
+
+            // From Name:
+            $msg->setFromName('REDCap Admin');
+            $subject = $Proj->project['app_title'] . ' ERROR/EXCEPTION';
+            $msg->setSubject($subject);
+
+            $msg->setBody(nl2br($exception));
+
+            $result = $msg->send();
+
+            if ($result) {
+                REDCap::logEvent("ERROR/EXCEPTION occurred " . $exception, '', null, null);
+            }
+        }
     }
 }

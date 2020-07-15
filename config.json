@@ -61,23 +61,29 @@
 			"required": true,
 			"type": "radio",
             "choices":[
-                {
-                  "name" : "MSG DB",
-                  "value" : "msg_db"
-                },
-                {
-                  "name" : "MAIN PROJECT",
-                  "value" : "main_project"
-                }
+              {
+                "name": "MSG DB",
+                "value": "msg_db"
+              },
+              {
+                "name": "MAIN PROJECT",
+                "value": "main_project"
+              }
             ]
         },
-		{
-			"key": "enable-project-debug-logging",
-			"name": "<b>Enable Debug Logging</b><br><i>(optional)</i> Requires installation and configuration of emLogger",
-			"required": false,
-			"type": "checkbox"
-		}
-	],
+      {
+        "key": "admin-emails",
+        "name": "<b>Emails to be notified for errors/exceptions</b><br><i>(optional)</i> A comma-separated list of valid email addresses (no names)",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "enable-project-debug-logging",
+        "name": "<b>Enable Debug Logging</b><br><i>(optional)</i> Requires installation and configuration of emLogger",
+        "required": false,
+        "type": "checkbox"
+      }
+    ],
 
 
 	"system-settings": [
