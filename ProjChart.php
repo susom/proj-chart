@@ -105,6 +105,9 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
             throw new \LogicException("cant save data to MSG project");
         }
 
+        //3.  GET PUBLIC SURVEY URL WITH FIELDS LINKED
+        // $survey_link = \REDCap::getSurveyLink($record=$next_id, $instrument='invitation_questionnaire', $event_id='', $instance=1, $project_id=$this->main_project);
+
         return true;
     }
 
