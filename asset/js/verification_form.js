@@ -1,5 +1,6 @@
 Form = {
     ajaxURL: '',
+    instrument: '',
     init: function () {
         $("#form").hide();
         Form.inject();
@@ -124,7 +125,7 @@ Form = {
     ajaxVerify: function (unique, zipcode) {
         $.ajax({
             url: Form.ajaxURL,
-            data: {newuniq: unique, zipcode_abs: zipcode, redcap_csrf_token: Form.redcap_csrf_token},
+            data: {newuniq: unique, zipcode_abs: zipcode, instrument: Form.instrument},
             type: 'POST',
             success: function (response) {
                 data = JSON.parse(response)

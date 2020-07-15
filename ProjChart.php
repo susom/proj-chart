@@ -2,19 +2,23 @@
 namespace Stanford\ProjChart;
 
 use Message;
+use function Aws\filter;
+
 require_once "emLoggerTrait.php";
 
-class ProjChart extends \ExternalModules\AbstractExternalModule {
+class ProjChart extends \ExternalModules\AbstractExternalModule
+{
 
     use emLoggerTrait;
 
     public $msgDatabasePid;
-    private   $newuniq
+    private $newuniq
     , $zipcode_abs
     , $enabledProjects
     , $main_project_record
     , $main_project_id
     , $msg_db_record
+    , $instrument
     , $msg_db_project_id;
 
     public function __construct() {
@@ -42,14 +46,70 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
         $repeat_instance = 1
     ) {
         if (strpos($instrument, "screening_survey") > -1 && $record == null) {
+
+            $this->setInstrument($instrument);
+
             $this->includeFile('pages/verification_form.php');
         }
     }
 
-    function redcap_survey_complete()
-    {
+    function redcap_survey_complete(
+        $project_id,
+        $record = null,
+        $instrument,
+        $event_id,
+        $group_id = null,
+        $survey_hash,
+        $response_id = null,
+        $repeat_instance = 1
+    ) {
+        //TODO get screening record
+        //TODO pull MSG record
+        //TODO update msg record with Mirror master child record id. main_record_id
+
+        try {
+            $param = array(
+                'project_id' => $project_id,
+                'return_format' => 'array',
+                'event_id' => $event_id,
+            );
+
+            $results = \REDCap::getData($param);;
+            $data = array();
+            foreach ($results as $record_id => $result) {
+                if ($record_id == $record) {
+                    $data = $result[$event_id];
+                    break;
+                }
+            }
+            if ($data == null) {
+                throw new \Exception("could not find record");
+            }
+
+            $this->zipcode_abs = $data['zipcode_abs'];
+            $this->newuniq = $data['newuniq'];
+
+            // Match INCOMING newuniq Attempt and Verify zipcode_abs , find the record in the MSG DB
+            $address_data = $this->getTertProjectData("msg_db");
+
+            //2.  UPDATE MSG DB record with "claimed" main record project
+            $msg = array(
+                "record_id" => $address_data['record_id'],
+                "consent_rc_link" => $data['main_record_id'],
+            );
+            $r = \REDCap::saveData($this->msg_db_project_id, 'json', json_encode(array($msg)), 'normal');
+            if (!empty($r['errors'])) {
+                throw new \LogicException("cant save data to MSG project");
+            }
+
+            # finally redirect to main project consent form.
+            redirect($data['consent_suvey_link']);
+        } catch (\Exception $e) {
+            $this->emError($e->getMessage());
+        }
         return;
     }
+
 
     /**
      * Parses request and sets up object
@@ -62,8 +122,8 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
         if (empty($_POST)){
             $_POST = json_decode(file_get_contents('php://input'), true);
         }
-
-        $this->newuniq      = isset($_POST["newuniq"]) ? strtoupper(trim($_POST["newuniq"])) : NULL ;
+        $this->setInstrument(filter_var($_POST['instrument'], FILTER_SANITIZE_STRING));
+        $this->newuniq = isset($_POST["newuniq"]) ? strtoupper(trim($_POST["newuniq"])) : null;
         $this->zipcode_abs  = isset($_POST["zipcode_abs"]) ? trim($_POST["zipcode_abs"]) : NULL ;
         $valid              = (is_null($this->newuniq) || is_null($this->zipcode_abs)) ? false : true;
         return $valid;
@@ -87,28 +147,31 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
         $next_id = $this->getNextAvailableRecordId($this->main_project_id);
 
         //1.  CREATE NEW RECORD, POPULATE these 2 fields
-        $data = array(
-            "record_id" => $next_id,
-            "unique_code" => $this->newuniq
-        );
+        $data = $address_data;
+        $data["record_id"] = $next_id;
+        $data["unique_code"] = $this->newuniq;
         $r = \REDCap::saveData($this->main_project_id, 'json', json_encode(array($data)));
         if (!empty($r['errors'])) {
             throw new \LogicException("cant save data to main project");
         }
 
         //2.  UPDATE MSG DB record with "claimed" main record project
-        $data = array(
-            "record_id" => $address_data['record_id'],
-            "consent_rc_link" => $next_id,
-        );
-        $r = \REDCap::saveData($this->msg_db_project_id, 'json', json_encode(array($data)), 'normal');
-        if (!empty($r['errors'])) {
-            throw new \LogicException("cant save data to MSG project");
-        }
+//        $data = array(
+//            "record_id" => $address_data['record_id'],
+//            "consent_rc_link" => $next_id,
+//        );
+//        $r = \REDCap::saveData($this->msg_db_project_id, 'json', json_encode(array($data)), 'normal');
+//        if (!empty($r['errors'])) {
+//            throw new \LogicException("cant save data to MSG project");
+//        }
 
         //3.  GET PUBLIC SURVEY URL WITH FIELDS LINKED
-        $survey_link = \REDCap::getSurveyLink($next_id, 'screening_survey', $this->getFirstEventId(), $instance = 1,
+        $survey_link = \REDCap::getSurveyLink($next_id, $this->getInstrument(), $this->getFirstEventId(), $instance = 1,
             $this->getProjectId());
+
+        if (is_null($survey_link)) {
+            throw new \LogicException("could not generate Survey link");
+        }
 
         return $survey_link;
     }
@@ -141,15 +204,16 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
                         $redeemed_participant_id = $result["consent_rc_link"];
 
                         //VERIFIY THAT THE CODE USED MATCHES ZIPCODE OF ADDRESS FOR IT
-                        if ($result['zipcode_abs'] == $this->zipcode_abs) {
+                        if ($result['zipcode_abs'] == $this->zipcode_abs && $result['newuniq'] == $this->newuniq) {
                             if (!empty($redeemed_participant_id)) {
                                 $this->emDebug("This newuniq Code has already been claimed by participant ",
                                     $this->redeemed_participant_id);
                                 return false;
                             }
 
-                            $this->emDebug("Found a matching newuniq/zipcode_abs for: ", $this->newuniq, $this->zipcode_abs);
-                            $this->msg_code_record   = $newuniq_record;
+                            $this->emDebug("Found a matching newuniq/zipcode_abs for: ", $this->newuniq,
+                                $this->zipcode_abs);
+                            $this->msg_code_record = $newuniq_record;
                             return $result;
                         }
                     }
@@ -308,4 +372,21 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
             }
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getInstrument()
+    {
+        return $this->instrument;
+    }
+
+    /**
+     * @param mixed $instrument
+     */
+    public function setInstrument($instrument)
+    {
+        $this->instrument = $instrument;
+    }
+
 }

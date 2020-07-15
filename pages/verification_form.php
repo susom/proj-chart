@@ -10,4 +10,5 @@ namespace Stanford\ProjChart;
 <script src="<?php echo $this->getUrl('asset/js/verification_form.js') ?>"></script>
 <script>
     Form.ajaxURL = "<?php echo $this->getUrl('ajax/verify.php', false, true) ?>"
+    Form.instrument = "<?php echo $this->getInstrument() ?>"
 </script>
