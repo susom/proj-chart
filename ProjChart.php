@@ -215,6 +215,9 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
                             $this->emDebug("Found a matching newuniq/zipcode_abs for: ", $this->newuniq,
                                 $this->zipcode_abs);
                             $this->msg_code_record = $newuniq_record;
+
+                            // remove complete value.
+                            unset($result[count($result) - 1]);
                             return $result;
                         }
                     }
