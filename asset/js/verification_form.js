@@ -118,8 +118,8 @@ Form = {
     },
     inject: function () {
         var contest = '<div id="new-form" class="container">' +
-            '<div class="row col-12">' +
-            '<div class="col-2">Postal Unique Code:</div>' +
+            '<section class="newuniq"><h2>Unique Code (8 Characters)</h2>' +
+            '<div class="row">' +
             '<div class="col-1"><input data-num="1" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" " /></div>' +
             '<div class="col-1"><input data-num="2" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
             '<div class="col-1"><input data-num="3" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
@@ -128,16 +128,16 @@ Form = {
             '<div class="col-1"><input data-num="6" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
             '<div class="col-1"><input data-num="7" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
             '<div class="col-1"><input data-num="8" data-type="newuniq" class="newuniq overflow-auto form-control p-0 " type="text" maxLength="1" size="5" " /></div>' +
-            '</div>' +
-            '<div class="row col-12">' +
-            '<div class="col-2">Postal Unique Code:</div>' +
-            '<div class="col-2"><input data-num="1" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}"/></div>' +
-            '<div class="col-2"><input data-num="2" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
-            '<div class="col-2"><input data-num="3" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
-            '<div class="col-2"><input data-num="4" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
-            '<div class="col-2"><input data-num="5" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
-            '</div>' +
-            '<div class="row offset-4"><button id="verify" type="button" class="btn btn-info">Verify</button></div>' +
+            '</div></section>' +
+            '<section class="zipcode"><h2>Postal Code</h2>' +
+            '<div class="row">' +
+            '<div class="col-1"><input data-num="1" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}"/></div>' +
+            '<div class="col-1"><input data-num="2" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
+            '<div class="col-1"><input data-num="3" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
+            '<div class="col-1"><input data-num="4" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
+            '<div class="col-1"><input data-num="5" data-type="zipcode" class="zipcode overflow-auto form-control p-0 " type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
+            '</div></section>' +
+            '<section class="verify"><div class="row"><button id="verify" type="button" class="btn btn-info btn-lg btn-block">Verify</button></div></section>' +
             '</div>';
         $("#form").after(contest);
         $("#new-form").show();

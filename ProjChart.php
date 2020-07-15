@@ -40,14 +40,13 @@ class ProjChart extends \ExternalModules\AbstractExternalModule {
         $response_id = null,
         $repeat_instance = 1
     ) {
-        if ($instrument == 'screening_survey') {
+        if (strpos($instrument, "screening_survey") > -1) {
             $this->includeFile('pages/verification_form.php');
         }
     }
 
     function redcap_survey_complete()
     {
-
         return;
     }
 
