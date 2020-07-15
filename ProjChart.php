@@ -148,7 +148,12 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         $data["record_id"] = $next_id;
         $r = \REDCap::saveData($this->main_project_id, 'json', json_encode(array($data)));
         if (!empty($r['errors'])) {
-            throw new \LogicException("cant save data to main project");
+            if (is_array($r['errors'])) {
+                $e = implode(",", $r['errors']);
+            } else {
+                $e = $r['errors'];
+            }
+            throw new \LogicException("cant save data to main project " . $e);
         }
 
         //2.  UPDATE MSG DB record with "claimed" main record project
