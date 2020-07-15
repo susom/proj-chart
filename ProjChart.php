@@ -92,7 +92,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
             //2.  UPDATE MSG DB record with "claimed" main record project
             $msg = array(
                 "record_id" => $address_data['record_id'],
-                "consent_rc_link" => $data['main_record_id'],
+                "date_claimed" => date('Y-m-d H:i:s'),
             );
             $r = \REDCap::saveData($this->msg_db_project_id, 'json', json_encode(array($msg)), 'normal');
             if (!empty($r['errors'])) {
