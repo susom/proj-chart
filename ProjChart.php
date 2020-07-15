@@ -146,7 +146,6 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         //1.  CREATE NEW RECORD, POPULATE these 2 fields
         $data = $address_data;
         $data["record_id"] = $next_id;
-        $data["unique_code"] = $this->newuniq;
         $r = \REDCap::saveData($this->main_project_id, 'json', json_encode(array($data)));
         if (!empty($r['errors'])) {
             throw new \LogicException("cant save data to main project");
@@ -365,7 +364,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
             $result = $msg->send();
 
             if ($result) {
-                REDCap::logEvent("ERROR/EXCEPTION occurred " . $exception, '', null, null);
+                \REDCap::logEvent("ERROR/EXCEPTION occurred " . $exception, '', null, null);
             }
         }
     }
