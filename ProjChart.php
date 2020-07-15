@@ -45,7 +45,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         $response_id = null,
         $repeat_instance = 1
     ) {
-        if (strpos($instrument, "screening_survey") > -1 && $record == null) {
+        if (strpos($instrument, "landing_page") > -1 && $record == null) {
 
             $this->setInstrument($instrument);
 
