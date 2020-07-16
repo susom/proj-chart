@@ -44,6 +44,18 @@
             "type": "project-id"
         },
         {
+            "key": "redirect-instrument",
+            "name": "<b>Redirect Instrument</b><br>When this instrument is rendered, we will redirect to the url below",
+            "required": true,
+            "type": "form-list"
+        },
+        {
+            "key": "redirect-url-field",
+            "name": "<b>Redirect URL Field</b><br>This is the field containing the url",
+            "required": true,
+            "type": "field-list"
+        },
+        {
             "key": "admin-emails",
             "name": "<b>Emails to be notified for errors/exceptions</b><br><i>(optional)</i> A comma-separated list of valid email addresses (no names)",
             "required": false,

@@ -12,10 +12,10 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
     use emLoggerTrait;
 
     private $newuniq
-    , $zipcode_abs
-    , $enabledProjects
+    , $zipcode_abs;
+
+    private$enabledProjects
     , $main_project_record
-    , $main_project_id
     , $msg_db_record
     , $instrument
     , $msg_db_project_id;
@@ -27,15 +27,6 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
 
     /**
      * Hijack the public survey page to present our custom code entry page
-     *
-     * @param      $project_id
-     * @param null $record
-     * @param      $instrument
-     * @param      $event_id
-     * @param null $group_id
-     * @param      $survey_hash
-     * @param null $response_id
-     * @param int  $repeat_instance
      */
     function redcap_survey_page_top(
         $project_id,
@@ -47,6 +38,23 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         $response_id = null,
         $repeat_instance = 1
     ) {
+
+        $redirectInstrument = $this->getProjectSetting('redirect-instrument');
+
+        // Handle a redirect to the main project
+        if ($instrument == $redirectInstrument) {
+            $redirectUrlField = $this->getProjectSetting('redirect-url-field');
+            $params = array(
+                'records'   => $record,
+                'fields'    => [$redirectUrlField]
+            );
+            $q = REDCap::getData($params);
+            if (empty($q[$record][$event_id][$redirectUrlField])) {
+                $this->emDebug("Unable to find redirect url in $redirectUrlField");
+            }
+            redirect($q[$record][$event_id][$redirectUrlField]);
+            return true;
+        }
 
         // Is this the public survey - we tell by assuming the record_id is null
         if ($record == null) {
@@ -67,39 +75,39 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         $repeat_instance = 1
     ) {
 
-        if ($instrument == 'contact_information') {
-            # finally redirect to main project consent form.
-            $param = array(
-                'return_type' => 'json',
-                'records' => $record,
-                'fields'    => ['consent_survey_link']
-            );
-
-            $q = REDCap::getData($param);
-
-            $results = json_decode($q,true);
-            $result = $results[0];
-            $link = $result['consent_survey_link'];
-            if (empty($link)) {
-                $this->emError("Unable to redirect after completion of $instrument");
-                return false;
-            }
-            redirect($result['consent_survey_link']);
-        }
+        // if ($instrument == 'contact_information') {
+        //     # finally redirect to main project consent form.
+        //     $param = array(
+        //         'return_type' => 'json',
+        //         'records' => $record,
+        //         'fields'    => ['consent_survey_link']
+        //     );
+        //
+        //     $q = REDCap::getData($param);
+        //
+        //     $results = json_decode($q,true);
+        //     $result = $results[0];
+        //     $link = $result['consent_survey_link'];
+        //     if (empty($link)) {
+        //         $this->emError("Unable to redirect after completion of $instrument");
+        //         return false;
+        //     }
+        //     redirect($result['consent_survey_link']);
+        // }
 
 
         try {
 
-            // Checking to see if the screening survey has disposed the unique id
+            // Load information from the saved survey
             $param = array(
                 'project_id' => $project_id,
                 'event_id'   => $event_id,
                 'records'    => [ $record ],
-                'fields'     => [ 'address_id','calc_disposed' ]
+                'fields'     => [ 'uniqueid','calc_disposed' ]
             );
-
             $results = REDCap::getData($param);
             $data = $results[$record][$event_id];
+
             if (!isset( $data['calc_disposed'])) {
                 $this->emError("Unable to determine if record $record was disposed");
                 return false;
@@ -107,20 +115,22 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
 
             if (!$data['calc_disposed']) {
                 $this->emDebug("Record $record was not disposed at end of $instrument");
+                // We don't need to do anything
                 return false;
             }
 
+            // Lets see if it was already marked as disposed in the address database
             // Check if the record was already disposed in the address db project
-            $address_id = $data['address_id'];
-            if (empty($address_id)) {
-                $this->emError("Unable to find address record id for $record");
+            $uniqueid = $data['uniqueid'];
+            if (empty($uniqueid)) {
+                $this->emError("Unable to find uniqueid for $record");
                 return false;
             }
 
-            $addressPid = $this->getProjectSetting('address-db-pid');
+            $addressPid = intval($this->getProjectSetting('address-db-pid'));
             $param = array(
                 'project_id' => $addressPid,
-                'records'   => [ $address_id ],
+                'records'   => [ $uniqueid ],
                 'return_format' => 'json'
             );
             $q = REDCap::getData($param);
@@ -132,10 +142,10 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
                 return false;
             }
 
+            // Update the claimed data
             $result['date_claimed'] = date("Y-m-d H:i:s");
             $result['calc_disposed'] = $record;
-
-            $r = REDCap::saveData($addressPid, 'json', json_encode(array($result)), 'normal');
+            $r = REDCap::saveData($addressPid, 'json', json_encode(array($result)), 'overwrite');
             if (!empty($r['errors'])) {
                 throw new \LogicException("cant save data to MSG project");
             }
@@ -153,16 +163,10 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
      * @return bool request valid
      */
     public function parseFormInput() {
-        $this->emDebug("Incoming POST Code + Zip: ", $_POST);
-
-        // if (empty($_POST)){
-        //     $_POST = json_decode(file_get_contents('php://input'), true);
-        // }
-        // $this->setInstrument(filter_var($_POST['instrument'], FILTER_SANITIZE_STRING));
-
-        $this->newuniq      = isset($_POST["newuniq"]) ? strtoupper(trim(filter_var($_POST["newuniq"], FILTER_SANITIZE_STRING))) : NULL;
-        $this->zipcode_abs  = isset($_POST["zipcode_abs"]) ? trim(filter_var($_POST["zipcode_abs"], FILTER_SANITIZE_NUMBER_INT)) : NULL ;
+        $this->newuniq      = isset($_POST["newuniq"])      ? strtoupper(trim(filter_var($_POST["newuniq"], FILTER_SANITIZE_STRING))) : NULL;
+        $this->zipcode_abs  = isset($_POST["zipcode_abs"])  ? trim(filter_var($_POST["zipcode_abs"], FILTER_SANITIZE_NUMBER_INT))     : NULL ;
         $valid              = (empty($this->newuniq) || empty($this->zipcode_abs)) ? false : true;
+        $this->emDebug("Incoming POST Code + Zip: ", $_POST, $valid);
         return $valid;
     }
 
@@ -173,7 +177,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
      */
     public function formHandler() {
         // Match INCOMING newuniq Attempt and Verify zipcode_abs , find the record in the MSG DB
-        $address_data = $this->getValidDbEntry();
+        $address_data = $this->isValidEntry();
 
         if (!$address_data) {
             $this->emDebug("Should return error but disabling for now",
@@ -224,14 +228,16 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
 
     /**
      * GET DATA FROM PROJECT DATA TIED TO THIS EM
+     * The uniqueid and zipcode must be set for hte object.
      * @return bool
      */
-    public function getValidDbEntry() {
+    public function isValidEntry() {
 
-        $lookup_pid = $this->getProjectSetting('address-db-pid');
+        $address_pid = $this->getProjectSetting('address-db-pid');
 
         $param = array(
-            'project_id' => $lookup_pid
+            'project_id' => $address_pid,
+            'records' => [ $this->newuniq ]
         );
 
         $results = \REDCap::getData($param);;
@@ -240,23 +246,19 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
             // Get rid of event id
             $result = end($record);
 
-            $newuniq_record = $result["record_id"];
+
+            $zip            = $result['zipcode_abs'];
             $date_claimed   = $result['date_claimed'];
             $screen_id      = $result["screen_id_claimed"];
 
-                            //VERIFY THAT THE CODE USED MATCHES ZIPCODE OF ADDRESS FOR IT
-            if ($result['zipcode_abs'] == $this->zipcode_abs && $result['newuniq'] == $this->newuniq) {
+            if ($zip == $this->zipcode_abs) {
                 // Found a match
                 if (!empty($redeemed_participant_id)) {
-                    $this->emDebug("This newuniq Code has already been claimed by participant $screen_id");
+                    $this->emDebug("This newuniq Code has already been claimed by participant $screen_id on $date_claimed");
                     return false;
                 }
 
                 $this->emDebug("Found a matching newuniq/zipcode_abs for: ", $this->newuniq, $this->zipcode_abs);
-                $this->msg_code_record = $newuniq_record;
-
-                // remove complete value.
-                // unset($result[count($result) - 1]);
                 return $result;
             }
         }
