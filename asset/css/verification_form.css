@@ -1,6 +1,6 @@
 
 #form, #surveyinstructions, #changeFont {
-    display: none; 
+    display: none;
 }
 
 
@@ -9,7 +9,7 @@
     text-align:center;
 }
 
-#new-form input[type='text']{
+#new-form input[type='text'] {
     width: 45px;
     height: 45px !important;
     font-size: 24px !important;
@@ -17,7 +17,19 @@
     text-align: center;
 }
 
-#new-form h2{ 
+#new-form input[type='text']::selection {
+    background: transparent;
+}
+
+#new-form input[type='text']:invalid {
+    background-color: red;
+    opacity: 0.5;
+    /*border-color: red;*/
+    /*box-shadow: 0 0 5px red inset;*/
+}
+
+
+#new-form h2{
     font-size: 21px;
     line-height: 1.38105;
     font-weight: 400;

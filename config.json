@@ -1,104 +1,73 @@
 {
-	"name": "TrackCOVID Chart EM",
-
-	"namespace": "Stanford\\ProjChart",
-
-	"description": "A Custom EM to manage conversion of invitations for CHART project",
-
-	"documentation": "README.md",
-
-	"authors": [
-		{
-			"name": "Andrew Martin",
-			"email": "andy123@stanford.edu",
-			"institution": "Stanford University"
-		},
-		{
-			"name": "Ihab Zeedia",
-			"email": "ihabz@stanford.edu",
-			"institution": "Stanford University"
-		},
-		{
-			"name": "Irvin Szeto",
-			"email": "irvins@stanford.edu",
-			"institution": "Stanford University"
-		}
-	],
-
-	"permissions": [
-		"redcap_survey_page_top",
-		"redcap_survey_complete"
-	],
-
-	"framework-version": 4,
-
-	"enable-every-page-hooks-on-system-pages": false,
-
-	"links": {
-		"project": [
-			{
-	        "name": "Chart EM Instructions",
-	        "icon": "gear",
-	        "url": "pages/chart_instructions.php"
-	      }
-		],
-		"control-center": [
-	      {
-	        "name": "Chart EM Setup Instructions",
-	        "icon": "gear",
-	        "url": "pages/chart_config.php"
-	      }
-	    ]
-	},
-
-	"no-auth-pages": [
-	],
-
-	"project-settings": [
-		{
-			"key": "em-mode",
-			"name": "<b>EM Mode</b><br>This EM is used to coordinate multiple projects.  Please indicate which project this is?",
-			"required": true,
-			"type": "radio",
-            "choices":[
-              {
-                "name": "MSG DB",
-                "value": "msg_db"
-              },
-              {
-                "name": "MAIN PROJECT",
-                "value": "main_project"
-              }
-            ]
+    "name": "TrackCOVID Chart EM",
+    "namespace": "Stanford\\ProjChart",
+    "description": "A Custom EM to manage conversion of invitations for CHART project",
+    "documentation": "README.md",
+    "authors": [
+        {
+            "name": "Andrew Martin",
+            "email": "andy123@stanford.edu",
+            "institution": "Stanford University"
         },
-      {
-        "key": "admin-emails",
-        "name": "<b>Emails to be notified for errors/exceptions</b><br><i>(optional)</i> A comma-separated list of valid email addresses (no names)",
-        "required": false,
-        "type": "text"
-      },
-      {
-        "key": "enable-project-debug-logging",
-        "name": "<b>Enable Debug Logging</b><br><i>(optional)</i> Requires installation and configuration of emLogger",
-        "required": false,
-        "type": "checkbox"
-      }
+        {
+            "name": "Ihab Zeedia",
+            "email": "ihabz@stanford.edu",
+            "institution": "Stanford University"
+        },
+        {
+            "name": "Irvin Szeto",
+            "email": "irvins@stanford.edu",
+            "institution": "Stanford University"
+        }
     ],
-
-
-	"system-settings": [
-		{
-			"key": "enable-system-debug-logging",
-			"name": "<b>Enable Debug Logging (system-wide)</b><i>(optional)</i> Requires installation and configuration of emLogger",
-			"required": false,
-			"type": "checkbox"
-		}
-	],
-
-	"compatibility": {
-		"php-version-min": "",
-		"php-version-max": "",
-		"redcap-version-min": "",
-		"redcap-version-max": ""
-	}
+    "permissions": [
+        "redcap_survey_page_top",
+        "redcap_survey_complete"
+    ],
+    "framework-version": 4,
+    "enable-every-page-hooks-on-system-pages": false,
+    "links": {
+    },
+    "no-auth-pages": [
+    ],
+    "project-settings": [
+        {
+            "key": "dest-instrument",
+            "name": "<b>Start Survey</b><br>If someone enters valid codes, which survey should they start on?",
+            "required": true,
+            "type": "form-list"
+        },
+        {
+            "key": "address-db-pid",
+            "name": "<b>Project of Address Database</b><br>It must contain fields in accordance with the sample project",
+            "required": true,
+            "type": "project-id"
+        },
+        {
+            "key": "admin-emails",
+            "name": "<b>Emails to be notified for errors/exceptions</b><br><i>(optional)</i> A comma-separated list of valid email addresses (no names)",
+            "required": false,
+            "type": "text"
+        },
+        {
+            "key": "enable-project-debug-logging",
+            "name": "<b>Enable Debug Logging</b><br><i>(optional)</i> Requires installation and configuration of emLogger",
+            "required": false,
+            "type": "checkbox"
+        }
+    ],
+    "system-settings": [
+        {
+            "key": "enable-system-debug-logging",
+            "name": "<b>Enable Debug Logging (system-wide)</b><i>(optional)</i> Requires installation and configuration of emLogger",
+            "required": false,
+            "type": "checkbox"
+        }
+    ],
+    "compatibility": {
+        "php-version-min": "",
+        "php-version-max": "",
+        "redcap-version-min": "",
+        "redcap-version-max": ""
+    }
 }
