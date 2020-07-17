@@ -107,7 +107,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
                 'project_id' => $project_id,
                 'event_id'   => $event_id,
                 'records'    => [ $record ],
-                'fields'     => [ 'uniqueid','calc_disposed' ]
+                'fields'     => [ 'newuniq','calc_disposed' ]
             );
             $results = REDCap::getData($param);
             $data = $results[$record][$event_id];
@@ -125,16 +125,16 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
 
             // Lets see if it was already marked as disposed in the address database
             // Check if the record was already disposed in the address db project
-            $uniqueid = $data['uniqueid'];
-            if (empty($uniqueid)) {
-                $this->emError("Unable to find uniqueid for $record");
+            $newuniq = $data['newuniq'];
+            if (empty($newuniq)) {
+                $this->emError("Unable to find newuniq for $record");
                 return false;
             }
 
             $addressPid = intval($this->getProjectSetting('address-db-pid'));
             $param = array(
                 'project_id' => $addressPid,
-                'records'   => [ $uniqueid ],
+                'records'   => [ $newuniq ],
                 'return_format' => 'json'
             );
             $q = REDCap::getData($param);
