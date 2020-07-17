@@ -123,9 +123,13 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
                 return false;
             }
 
+
             // Lets see if it was already marked as disposed in the address database
             // Check if the record was already disposed in the address db project
             $newuniq = $data['newuniq'];
+
+            $this->emDebug("Verify if $record / $newuniq is disposed");
+
             if (empty($newuniq)) {
                 $this->emError("Unable to find newuniq for $record");
                 return false;
@@ -143,7 +147,6 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
 
             $this->emDebug("Loaded address", $result);
 
-
             if (!empty($result['date_claimed'])) {
                 $this->emDebug("$record already claimed");
                 return false;
@@ -151,9 +154,13 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
 
             // Update the claimed data
             $result['date_claimed'] = date("Y-m-d H:i:s");
-            $result['calc_disposed'] = $record;
+            $result['screen_id_claimed'] = $record;
+
+            $this->emDebug("About to update", $result);
+
             $r = REDCap::saveData($addressPid, 'json', json_encode(array($result)), 'overwrite');
             if (!empty($r['errors'])) {
+                $this->emError("Errors Saving", $r);
                 throw new \LogicException("cant save data to MSG project");
             }
             $this->emDebug("Updated disposition", $r);
