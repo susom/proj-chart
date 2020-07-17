@@ -52,7 +52,11 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
             if (empty($q[$record][$event_id][$redirectUrlField])) {
                 $this->emDebug("Unable to find redirect url in $redirectUrlField");
             }
-            redirect($q[$record][$event_id][$redirectUrlField]);
+
+            // Redirect (can't used redirect function as it has an 'exit' in it)
+            echo '<script type="text/javascript">window.location.href="' .
+                $q[$record][$event_id][$redirectUrlField] .
+                ';</script>';
             return true;
         }
 
@@ -137,6 +141,9 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
             $results = json_decode($q,true);
             $result = $results[0];
 
+            $this->emDebug("Loaded address", $result);
+
+
             if (!empty($result['date_claimed'])) {
                 $this->emDebug("$record already claimed");
                 return false;
@@ -149,6 +156,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
             if (!empty($r['errors'])) {
                 throw new \LogicException("cant save data to MSG project");
             }
+            $this->emDebug("Updated disposition", $r);
 
         } catch (\Exception $e) {
             $this->emError($e->getMessage());
