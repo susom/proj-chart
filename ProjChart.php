@@ -56,7 +56,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
             // Redirect (can't used redirect function as it has an 'exit' in it)
             echo '<script type="text/javascript">window.location.href="' .
                 $q[$record][$event_id][$redirectUrlField] .
-                ';</script>';
+                '";</script>';
             return true;
         }
 
