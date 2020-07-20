@@ -268,7 +268,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
 
             if ($zip == $this->zipcode_abs) {
                 // Found a match
-                if (!empty($redeemed_participant_id)) {
+                if (!empty($screen_id)) {
                     $this->emDebug("This newuniq Code has already been claimed by participant $screen_id on $date_claimed");
                     return false;
                 }
