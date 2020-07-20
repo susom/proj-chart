@@ -220,7 +220,7 @@ Form = {
             '<div class="col-1"><input data-num="4" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
             '<div class="col-1"><input data-num="5" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" /></div>' +
             '</div></section>' +
-            '<section class="verify"><div class="row"><button id="verify" type="button" class="btn btn-info btn-lg btn-block">Verify</button></div></section>' +
+            '<section class="verify"><div class="row"><button id="verify" style="background-color: #007CBE" type="button" class="btn btn-info btn-lg btn-block">Verify</button></div></section>' +
             '</div>';
         $("#pagecontent").after(contest);
         $("#new-form").show();
