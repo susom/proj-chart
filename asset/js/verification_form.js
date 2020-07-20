@@ -190,8 +190,8 @@ Form = {
             },
             error: function (request, error) {
                 var data = JSON.parse(request.responseText);
-                $('#verifyError>span').html('<p>' + data.message + '</p>').parent().show();
-                //alert(data.message);
+                //$('#verifyError>span').html('<p>' + data.message + '</p>').parent().show();
+                alert(data.message);
             }
         });
     },
