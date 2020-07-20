@@ -191,7 +191,7 @@ Form = {
             error: function (request, error) {
                 var data = JSON.parse(request.responseText);
                 //$('#verifyError>span').html('<p>' + data.message + '</p>').parent().show();
-                alert(data.message);
+                $('#errors').html('<strong>' + data.message + '</strong>').show()
             }
         });
     },
@@ -201,7 +201,8 @@ Form = {
             ' <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
             ' <strong><span></span></strong>' +
             '</div>' +
-            '<section><h2>Unique Code (8 Characters)</h2>' +
+            '<div id="errors" class="text-left alert alert-danger hidden"></div>' +
+            '<section><h2>Enter your ID (8 Characters)</h2>' +
             '<div class="row row1">' +
             '<div class="col-1"><input data-num="1" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" /></div>' +
             '<div class="col-1"><input data-num="2" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9a-zA-Z]{1}" /></div>' +
