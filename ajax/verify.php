@@ -15,7 +15,11 @@ try {
     $module->setUserCookie('login',
         $module->generateUniqueCodeHash(filter_var($_POST['newuniq'], FILTER_SANITIZE_STRING)));
 
-    echo json_encode(array('status' => 'success', 'link' => $link));
+    echo json_encode(array(
+        'status' => 'success',
+        'link' => $link,
+        'cookie' => $module->generateUniqueCodeHash(filter_var($_POST['newuniq'], FILTER_SANITIZE_STRING)),
+    ));
 } catch (\LogicException $e) {
     $module->emError($e->getMessage());
     $module->notifyAdmins($e->getMessage());

@@ -186,6 +186,7 @@ Form = {
             type: 'POST',
             success: function (response) {
                 var data = JSON.parse(response);
+                setCookie('login', data.cookie, 1)
                 window.location.replace(data.link);
             },
             error: function (request, error) {
