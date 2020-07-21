@@ -161,7 +161,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
             $r = REDCap::saveData($addressPid, 'json', json_encode(array($result)), 'overwrite');
             if (!empty($r['errors'])) {
                 $this->emError("Errors Saving", $r);
-                throw new \LogicException("cant save data to MSG project");
+                throw new \LogicException("cant save data to Codes project");
             }
             $this->emDebug("Updated disposition", $r);
 
@@ -197,7 +197,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         if (!$address_data) {
             $this->emDebug("Should return error but disabling for now",
                 "Error, no matching newuniq/zipcode_abs combination found");
-            throw new \LogicException("MSG record not found or already used " . $this->newuniq);
+            throw new \LogicException($this->newuniq . " is Invalid or Expired code");
         }
 
         // AT THIS POINT WE HAVE THE newuniq RECORD, IT HASNT BEEN ABUSED, IT HASNT YET BEEN CLAIMED
@@ -278,7 +278,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
             }
         }
 
-        $this->emDebug("No match found for in MSG DB for : ", $this->newuniq );
+        $this->emDebug("No match found for in Codes DB for : ", $this->newuniq);
         return false;
     }
 

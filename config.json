@@ -29,6 +29,8 @@
     "links": {
     },
     "no-auth-pages": [
+      "ajax/verify",
+      "pages/verification_form"
     ],
     "project-settings": [
         {
