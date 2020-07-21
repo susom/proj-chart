@@ -446,4 +446,15 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         $this->instrument = $instrument;
     }
 
+
+    public function generateUniqueCodeHash($newuniq)
+    {
+        return hash('sha256', $newuniq);
+    }
+
+    public function setUserCookie($name, $value)
+    {
+        #day
+        setcookie($name, $value, time() + 86406);
+    }
 }

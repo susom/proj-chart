@@ -10,6 +10,11 @@ try {
         throw new \LogicException("not valid input");
     }
     $link = $module->formHandler();
+
+    // when user finishes the survey they can redirected to user page in TrackCovid Appointment Scheduler without the need to login again
+    $module->setUserCookie('login',
+        $module->generateUniqueCodeHash(filter_var($_POST['newuniq'], FILTER_SANITIZE_STRING)));
+
     echo json_encode(array('status' => 'success', 'link' => $link));
 } catch (\LogicException $e) {
     $module->emError($e->getMessage());
