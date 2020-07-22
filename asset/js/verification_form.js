@@ -223,17 +223,17 @@ Form = {
             error: function (request, error) {
                 var data = JSON.parse(request.responseText);
                 //$('#verifyError>span').html('<p>' + data.message + '</p>').parent().show();
-                $('#errors').html('<strong>' + data.message + '</strong>').show()
+                $('#errors').html('<strong>' + data.message + '</strong>').parent().show()
             }
         });
     },
     inject: function () {
         var contest = '<div id="new-form" class="container">' +
-            // '<div class="alert alert-error text-center alert-dismissable collapse" role="alert" id="verifyError">' +
-            // ' <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-            // '</div>' +
+            '<div class="alert alert-error text-center alert-dismissable collapse" role="alert" id="verifyError">' +
+            ' <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+            ' <div id="errors" style="font-size: larger;"></div>' +
+            '</div>' +
             '<section><h2 class="code_info">Enter your ID (8 Characters) <i class="far fa-question-circle"></i></h2>' +
-            '<div id="errors" class="text-center alert alert-danger hidden" style="font-size: larger;"></div>' +
             '<div class="row row1">' +
             '<div class="col-1"><input data-num="1" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="'+Form.unique[0]+'"/></div>' +
             '<div class="col-1"><input data-num="2" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9a-zA-Z]{1}" value="'+Form.unique[1]+'"/></div>' +
