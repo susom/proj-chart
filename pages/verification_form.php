@@ -6,7 +6,7 @@ namespace Stanford\ProjChart;
 /** @var \Stanford\ProjChart\ProjChart $this */
 
 $code   = isset($_GET["code"]) ? filter_var($_GET["code"], FILTER_SANITIZE_STRING) : null;
-$zip    = isset($_GET["zip"]) ? filter_var($_GET["zip"], FILTER_SANITIZE_NUMBER_INT) : null;
+$zip    = isset($_GET["zip"])  ? filter_var($_GET["zip"],  FILTER_SANITIZE_NUMBER_INT) : null;
 
 ?>
 <link rel="stylesheet" type="text/css"

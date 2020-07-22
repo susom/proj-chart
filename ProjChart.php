@@ -194,11 +194,11 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
     public function formHandler() {
         // Match INCOMING newuniq Attempt and Verify zipcode_abs , find the record in the MSG DB
         $address_data = $this->isValidEntry();
-        
+
         if (!$address_data) {
             $this->emDebug("Should return error but disabling for now",
                 "Error, no matching newuniq/zipcode_abs combination found");
-            throw new \LogicException($this->newuniq . " is Invalid or Expired code");
+            throw new \LogicException($this->newuniq . " is Invalid or Expired");
         }
 
         // AT THIS POINT WE HAVE THE newuniq RECORD, IT HASNT BEEN ABUSED, IT HASNT YET BEEN CLAIMED
@@ -211,7 +211,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         $data = array_intersect_key($address_data, array_flip($dest_fields));
         $data[REDCap::getRecordIdField()] = $next_id;
         $data["telephone_screen"] = $this->parseFromQs;
-       
+
         $r = REDCap::saveData('json', json_encode(array($data)));
         if (!empty($r['errors'])) {
             if (is_array($r['errors'])) {
