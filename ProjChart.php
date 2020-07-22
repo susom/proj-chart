@@ -180,6 +180,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
     public function parseFormInput() {
         $this->newuniq      = isset($_POST["newuniq"])      ? strtoupper(trim(filter_var($_POST["newuniq"], FILTER_SANITIZE_STRING))) : NULL;
         $this->zipcode_abs  = isset($_POST["zipcode_abs"])  ? trim(filter_var($_POST["zipcode_abs"], FILTER_SANITIZE_NUMBER_INT))     : NULL ;
+        $this->parseFromQs  = isset($_POST["parseFromQs"])  ? trim(filter_var($_POST["parseFromQs"], FILTER_SANITIZE_NUMBER_INT))     : NULL ;
         $valid              = (empty($this->newuniq) || empty($this->zipcode_abs)) ? false : true;
         $this->emDebug("Incoming POST Code + Zip: ", $_POST, $valid);
         return $valid;
@@ -193,7 +194,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
     public function formHandler() {
         // Match INCOMING newuniq Attempt and Verify zipcode_abs , find the record in the MSG DB
         $address_data = $this->isValidEntry();
-
+        
         if (!$address_data) {
             $this->emDebug("Should return error but disabling for now",
                 "Error, no matching newuniq/zipcode_abs combination found");
@@ -209,6 +210,8 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         $dest_fields = REDCap::getFieldNames();
         $data = array_intersect_key($address_data, array_flip($dest_fields));
         $data[REDCap::getRecordIdField()] = $next_id;
+        $data["telephone_screen"] = $this->parseFromQs;
+       
         $r = REDCap::saveData('json', json_encode(array($data)));
         if (!empty($r['errors'])) {
             if (is_array($r['errors'])) {
