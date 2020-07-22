@@ -64,9 +64,11 @@ Form = {
                 return false;
             }
 
-            if ((key >= 48 && key <= 57) ||
-                (key >= 65 && key <= 90) ||
-                (key >= 97 && key <= 122)) {
+            if ((key >= 48 && key <= 57)  || // normal numbers
+                (key >= 96 && key <= 105) || // keypad
+                (key >= 65 && key <= 90)     // ascii chars
+                // removed (key >= 97 && key <= 122)
+            ) {
                 // Find the next input if no siblings
                 if (!sib || !sib.length) {
                     var tabindex = t.attr('tabindex');
@@ -104,7 +106,7 @@ Form = {
                     return;
                 }
             } else {
-                if (key >= 48 && key <= 57) {
+                if ( (key >= 48 && key <= 57) || (key >= 96 && key <= 105) ) {
                     // Allow numbers
                     return;
                 }
@@ -185,11 +187,11 @@ Form = {
             }
         })
 
-        $(".code_info").on('click', function(){ 
+        $(".code_info").on('click', function(){
             $(".example_code").fadeIn("fast");
-            
+
             //adjust for sc(reen width
-            //TODO do this better , rush job 
+            //TODO do this better , rush job
             var view_w = $(window).width();
             if(view_w < 716){
                 var new_w = view_w - 20;
