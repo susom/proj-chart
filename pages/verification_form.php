@@ -14,7 +14,7 @@ $zip    = isset($_GET["zip"]) ? filter_var($_GET["zip"], FILTER_SANITIZE_NUMBER_
 <style>
     #example_img {
         position:absolute;
-        width:100%; height:500px; 
+        width:100%; height:500px;
         max-width:696px;
         left:50%; margin-left:-348px;
         top:10%;
@@ -27,7 +27,7 @@ $zip    = isset($_GET["zip"]) ? filter_var($_GET["zip"], FILTER_SANITIZE_NUMBER_
 <script>
     Form.ajaxURL = "<?php echo $this->getUrl('ajax/verify.php', true, true) ?>"
     window.onload = function () {
-        Form.init(<? echo "'".$code."'" ?>,<?php echo "'".$zip."'" ?>);
+        Form.init(<?php echo json_encode($code) . "," . json_encode($zip) ?>);
     }
 </script>
 <div class="example_code">
