@@ -233,7 +233,7 @@ Form = {
             ' <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
             ' <div id="errors" style="font-size: larger;"></div>' +
             '</div>' +
-            '<section><h2 class="code_info">Enter your ID<div class="text-center help_text">(<i class="far fa-question-circle"></i> Where is my ID?)</div></h2>' +
+            '<section><h2 class="code_info">Enter your ID<br><i class="far fa-question-circle"></i> <span class="help_text">Where is my ID?</span></h2>' +
             '<div class="row row1">' +
             '<div class="col-1"><input data-num="1" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="'+Form.unique[0]+'"/></div>' +
             '<div class="col-1"><input data-num="2" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9a-zA-Z]{1}" value="'+Form.unique[1]+'"/></div>' +

@@ -64,6 +64,7 @@
 
 .help_text {
     color: #0a6ebd;
+    font-size: smaller;
 }
 
 .code_info:hover > .help_text {
