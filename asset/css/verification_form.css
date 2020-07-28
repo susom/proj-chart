@@ -62,6 +62,10 @@
     cursor:pointer;
 }
 
+.code_info > i {
+    color: #0a6ebd;
+}
+
 .help_text {
     color: #0a6ebd;
     font-size: smaller;
