@@ -3,6 +3,9 @@
     display: none;
 }
 
+#surveytitlelogo, #surveytitle {
+    text-align:center;
+}
 
 #new-form {
     padding:50px 30px;
