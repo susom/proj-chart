@@ -38,6 +38,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         $response_id = null,
         $repeat_instance = 1
     ) {
+        $this->delayModuleExecution();
 
         $redirectInstrument = $this->getProjectSetting('redirect-instrument');
 
@@ -51,6 +52,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
             $q = REDCap::getData($params);
             if (empty($q[$record][$event_id][$redirectUrlField])) {
                 $this->emDebug("Unable to find redirect url in $redirectUrlField");
+                return false;
             }
 
             // Redirect (can't used redirect function as it has an 'exit' in it)
