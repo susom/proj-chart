@@ -52,14 +52,14 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
             $q = REDCap::getData($params);
             if (empty($q[$record][$event_id][$redirectUrlField])) {
                 $this->emDebug("Unable to find redirect url in $redirectUrlField");
-                return false;
+                return;
             }
 
             // Redirect (can't used redirect function as it has an 'exit' in it)
             echo '<script type="text/javascript">window.location.href="' .
                 $q[$record][$event_id][$redirectUrlField] .
                 '";</script>';
-            return true;
+            return;
         }
 
         // Is this the public survey - we tell by assuming the record_id is null
