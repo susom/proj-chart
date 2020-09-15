@@ -198,7 +198,7 @@ class ProjChart extends \ExternalModules\AbstractExternalModule
         if (!$address_data) {
             $this->emDebug("Should return error but disabling for now",
                 "Error, no matching newuniq/zipcode_abs combination found");
-            throw new \LogicException($this->newuniq . " is Invalid or Expired");
+            throw new \LogicException($this->newuniq . " and " . $this->zipcode_abs . " is Invalid or Expired");
         }
 
         // AT THIS POINT WE HAVE THE newuniq RECORD, IT HASNT BEEN ABUSED, IT HASNT YET BEEN CLAIMED
