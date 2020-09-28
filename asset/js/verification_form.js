@@ -4,9 +4,9 @@ Form = {
         $("#form").hide();
 
         // TODO - fix maybe, this was a rushjob
-        Form.unique         = unique ? unique : ["","","","","","","",""];
-        Form.zipcode        = zipcode ? zipcode : ["","","","",""];
-        Form.parseFromQs    = unique && zipcode ? 1 : 0;
+        Form.unique = unique ? unique : ["", "", "", "", "", "", "", ""];
+        Form.zipcode = zipcode ? zipcode : ["", "", "", "", ""];
+        Form.parseFromQs = unique && zipcode ? 1 : 0;
 
         Form.inject();
 
@@ -21,7 +21,7 @@ Form = {
             var search = "input[data-type=" + type + "][data-num=" + (num + 1) + "]";
             var sib = $(search);
 
-            if (type === 'newuniq' && ( num === 2 || num === 3)) {
+            if (type === 'newuniq' && (num === 2 || num === 3)) {
                 if (key >= 48 && key <= 57) {
                     // Skip numbers
                     key == 8;
@@ -46,7 +46,7 @@ Form = {
                             // Can't go back
                         }
                     } else {
-                        $('input[data-type="'+type+'"][data-num="'+(num-1)+'"]').select().focus();
+                        $('input[data-type="' + type + '"][data-num="' + (num - 1) + '"]').select().focus();
                     }
                 }
                 e.preventDefault();
@@ -64,7 +64,7 @@ Form = {
                 return false;
             }
 
-            if ((key >= 48 && key <= 57)  || // normal numbers
+            if ((key >= 48 && key <= 57) || // normal numbers
                 (key >= 96 && key <= 105) || // keypad
                 (key >= 65 && key <= 90)     // ascii chars
                 // removed (key >= 97 && key <= 122)
@@ -100,13 +100,13 @@ Form = {
                 return;
             }
 
-            if (type === 'newuniq' && ( num === 2 || num === 3)) {
+            if (type === 'newuniq' && (num === 2 || num === 3)) {
                 if (key >= 65 && key <= 90) {
                     // Allow alpha
                     return;
                 }
             } else {
-                if ( (key >= 48 && key <= 57) || (key >= 96 && key <= 105) ) {
+                if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
                     // Allow numbers
                     return;
                 }
@@ -188,22 +188,22 @@ Form = {
         })
 
         // Show the postcard
-        $(".code_info").on('click', function(){
+        $(".code_info").on('click', function () {
             $(".example_code").fadeIn("fast");
 
             //adjust for sc(reen width
             //TODO do this better , rush job
             var view_w = $(window).width();
-            if(view_w < 716){
+            if (view_w < 716) {
                 var new_w = view_w - 20;
-                var new_ml = Math.round(new_w/2) * -1;
-                $("#example_img").css("width", new_w+"px").css("margin-left", new_ml + "px");
-            }else{
+                var new_ml = Math.round(new_w / 2) * -1;
+                $("#example_img").css("width", new_w + "px").css("margin-left", new_ml + "px");
+            } else {
                 $("#example_img").css("width", "100%").css("margin-left", "-348px");
             }
         });
 
-        $(".example_code").click(function(){
+        $(".example_code").click(function () {
             $(this).fadeOut("medium");
         });
 
@@ -213,7 +213,7 @@ Form = {
     ajaxVerify: function (unique, zipcode) {
         $.ajax({
             url: Form.ajaxURL,
-            data: {newuniq: unique, zipcode_abs: zipcode, parseFromQs : Form.parseFromQs},
+            data: {newuniq: unique, zipcode_abs: zipcode, parseFromQs: Form.parseFromQs},
             type: 'POST',
             success: function (response) {
                 var data = JSON.parse(response);
@@ -229,28 +229,32 @@ Form = {
     },
     inject: function () {
         var contest = '<div id="new-form" class="container">' +
+            '            <div style="border: 0px !important;" class="alert alert-warning text-left alert-dismissable" role="alert">\n' +
+            '                <h4 class="alert-heading"><i class="fas fa-exclamation-circle"></i>Please Note!</h4>\n' +
+            '                <p>If you received a postcard with an erroneous ID number, please email <a href="mailto:signup@trackcovidbayarea.com">signup@trackcovidbayarea.com</a> including the mailing address where you received the postcard and we will email you back the correct ID. We apologize for the inconvenience.</p>\n' +
+            '            </div>' +
             '<div class="alert alert-error text-center alert-dismissable collapse" role="alert" id="verifyError">' +
             ' <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
             ' <div id="errors" style="font-size: larger;"></div>' +
             '</div>' +
             '<section><h2 class="code_info">Enter your ID<br><span class="help_text">Where is my ID</span> <i class="far fa-question-circle"></i> </h2>' +
             '<div class="row row1">' +
-            '<div class="col-1"><input data-num="1" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="'+Form.unique[0]+'"/></div>' +
-            '<div class="col-1"><input data-num="2" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9a-zA-Z]{1}" value="'+Form.unique[1]+'"/></div>' +
-            '<div class="col-1"><input data-num="3" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9a-zA-Z]{1}" value="'+Form.unique[2]+'"/></div>' +
-            '<div class="col-1"><input data-num="4" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="'+Form.unique[3]+'"/></div>' +
-            '<div class="col-1"><input data-num="5" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="'+Form.unique[4]+'"/></div>' +
-            '<div class="col-1"><input data-num="6" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="'+Form.unique[5]+'"/></div>' +
-            '<div class="col-1"><input data-num="7" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="'+Form.unique[6]+'"/></div>' +
-            '<div class="col-1"><input data-num="8" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="'+Form.unique[7]+'"/></div>' +
+            '<div class="col-1"><input data-num="1" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="' + Form.unique[0] + '"/></div>' +
+            '<div class="col-1"><input data-num="2" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9a-zA-Z]{1}" value="' + Form.unique[1] + '"/></div>' +
+            '<div class="col-1"><input data-num="3" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9a-zA-Z]{1}" value="' + Form.unique[2] + '"/></div>' +
+            '<div class="col-1"><input data-num="4" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="' + Form.unique[3] + '"/></div>' +
+            '<div class="col-1"><input data-num="5" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="' + Form.unique[4] + '"/></div>' +
+            '<div class="col-1"><input data-num="6" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="' + Form.unique[5] + '"/></div>' +
+            '<div class="col-1"><input data-num="7" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="' + Form.unique[6] + '"/></div>' +
+            '<div class="col-1"><input data-num="8" data-type="newuniq" class="newuniq overflow-auto form-control p-0" type="text" maxLength="1" size="5" pattern="[0-9]{1}" value="' + Form.unique[7] + '"/></div>' +
             '</div></section>' +
             '<section><h2>Postal Code</h2>' +
             '<div class="row row2">' +
-            '<div class="col-1"><input data-num="1" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" value="'+Form.zipcode[0]+'"/></div>' +
-            '<div class="col-1"><input data-num="2" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" value="'+Form.zipcode[1]+'"/></div>' +
-            '<div class="col-1"><input data-num="3" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" value="'+Form.zipcode[2]+'"/></div>' +
-            '<div class="col-1"><input data-num="4" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" value="'+Form.zipcode[3]+'"/></div>' +
-            '<div class="col-1"><input data-num="5" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" value="'+Form.zipcode[4]+'"/></div>' +
+            '<div class="col-1"><input data-num="1" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" value="' + Form.zipcode[0] + '"/></div>' +
+            '<div class="col-1"><input data-num="2" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" value="' + Form.zipcode[1] + '"/></div>' +
+            '<div class="col-1"><input data-num="3" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" value="' + Form.zipcode[2] + '"/></div>' +
+            '<div class="col-1"><input data-num="4" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" value="' + Form.zipcode[3] + '"/></div>' +
+            '<div class="col-1"><input data-num="5" data-type="zipcode" class="zipcode overflow-auto form-control p-0" type="text" maxLength="1" size="5" min="0" max="9" pattern="[0-9]{1}" value="' + Form.zipcode[4] + '"/></div>' +
             '</div></section>' +
             '<section class="verify"><div class="row"><button id="verify" style="background-color: #007CBE;color: white !important;" type="button" class="btn btn-info btn-lg btn-block">Verify</button></div></section>' +
             '</div>';
