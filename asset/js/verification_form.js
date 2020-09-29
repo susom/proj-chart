@@ -231,7 +231,7 @@ Form = {
         var contest = '<div id="new-form" class="container">' +
             '            <div style="border: 0px !important;" class="alert alert-warning text-left alert-dismissable" role="alert">\n' +
             '                <h4 class="alert-heading"><i class="fas fa-exclamation-circle"></i>Please Note!</h4>\n' +
-            '                <p>If you received a postcard with an erroneous ID number, please email <a href="mailto:signup@trackcovidbayarea.com">signup@trackcovidbayarea.com</a> including the mailing address where you received the postcard and we will email you back the correct ID. You can also call us at 415-348-2943. We apologize for the inconvenience. </p>\n' +
+            '                <p>If you received a postcard with an erroneous ID number, please email <a href="mailto:signup@trackcovidbayarea.com">signup@trackcovidbayarea.com</a> including the mailing address where you received the postcard and we will email you back the correct ID. You can also call us at <a href="tel:+14153482943">415-348-2943</a>. We apologize for the inconvenience. </p>\n' +
             '            </div>' +
             '<div class="alert alert-error text-center alert-dismissable collapse" role="alert" id="verifyError">' +
             ' <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
