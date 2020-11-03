@@ -20,7 +20,11 @@ $zip    = isset($_GET["zip"])  ? filter_var($_GET["zip"],  FILTER_SANITIZE_NUMBE
         top:10%;
         z-index:10;
         background:url(<?php echo $this->getUrl('asset/img/example_code.png', false, true) ?>) no-repeat;
-        background-size:contain;
+        background-size: contain;
+    }
+
+    #google_translate_element {
+        display: block !important;
     }
 </style>
 <script src="<?php echo $this->getUrl('asset/js/verification_form.js', false, true) ?>"></script>
@@ -28,8 +32,13 @@ $zip    = isset($_GET["zip"])  ? filter_var($_GET["zip"],  FILTER_SANITIZE_NUMBE
     Form.ajaxURL = "<?php echo $this->getUrl('ajax/verify.php', true, true) ?>"
     window.onload = function () {
         Form.init(<?php echo json_encode($code) . "," . json_encode($zip) ?>);
+
+        // this will remove the language options from this page. by setting cookie.
+        document.cookie = "p1000Lang=-1";
     }
 </script>
 <div class="example_code">
     <div id="example_img"></div>
 </div>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js"></script>

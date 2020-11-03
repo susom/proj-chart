@@ -228,7 +228,7 @@ Form = {
         });
     },
     inject: function () {
-        var contest = '<div id="new-form" class="container">' +
+        var contest = '<div id="new-form" class="container"><div id="google_translate_element"></div>' +
             '            <div style="border: 0px !important;" class="alert alert-warning text-left alert-dismissable" role="alert">\n' +
             '                <h4 class="alert-heading"><i class="fas fa-exclamation-circle"></i>Please Note!</h4>\n' +
             '                <p>If you received a postcard with an erroneous ID number, please email <a href="mailto:signup@trackcovidbayarea.com">signup@trackcovidbayarea.com</a> including the mailing address where you received the postcard and we will email you back the correct ID. You can also call us at <a href="tel:+14153482943">415-348-2943</a>. We apologize for the inconvenience. </p>\n' +
@@ -260,6 +260,9 @@ Form = {
             '</div>';
         $("#pagecontent").after(contest);
         $("#new-form").show();
+        setTimeout(function () {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }, 500);
     }
 }
 
